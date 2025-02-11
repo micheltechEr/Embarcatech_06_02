@@ -27,10 +27,45 @@ void define_duty_cycle(uint gpio,uint16_t duty_us){
     pwm_set_enabled(get_slice_num, true);
 }
 
+//Função responsável por realizar a movimentação de forma suave
+
+void smooth_effect(){
+    //Funcionamento padrão do bloco for, valor inicial;pulse_width deve ser menor ou igual ao valor máximo e o incremento de 5Us
+    for(uint16_t pulse_width = 500; pulse_width<=2400;pulse_width+=5){
+        define_duty_cycle(GPIO_SERVOMOTOR, pulse_width);
+        sleep_ms(10);
+    }
+
+    //O mesmo, mas agora voltando do grau máximo ao grau 0
+
+    for (uint16_t pulse_width = 2400; pulse_width >= 500; pulse_width -= 5) {
+        define_duty_cycle(GPIO_SERVOMOTOR, pulse_width);
+        sleep_ms(10); 
+    }
+}
+
+//Função de setup, responsável por inicializar e chamar a movimentação do servomotor
+void setup_pwm(){
+    define_duty_cycle(GPIO_SERVOMOTOR,2400);
+    gpio_put(LED_RGB,1);
+    sleep_ms(5000);
+
+    define_duty_cycle(GPIO_SERVOMOTOR,1470);
+    gpio_put(LED_RGB,0);
+    sleep_ms(5000);
+
+    define_duty_cycle(GPIO_SERVOMOTOR,500);
+    gpio_put(LED_RGB,1);
+    sleep_ms(5000);
+    smooth_effect();
+}
 
 int main() {
     stdio_init_all();
+    gpio_init(LED_RGB);
+    gpio_set_dir(LED_RGB,GPIO_OUT);
+    configs_pwm(GPIO_SERVOMOTOR);
     while (true) {
-        printf("Hello World PWM");
+       setup_pwm();
     }
 }
