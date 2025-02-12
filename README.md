@@ -4,6 +4,8 @@ Este projeto foi desenvolvido para praticar o uso de **PWM (Pulse Width Modulati
 
 O código utiliza as bibliotecas `pico/stdlib.h` e `hardware/pwm.h` para configurar o PWM nos pinos GPIO especificados. O servomotor é controlado através de variações no ciclo de trabalho (duty cycle), enquanto o LED RGB é usado para indicar diferentes estados do sistema.
 
+Para assistir o vídeo, [clique aqui](https://drive.google.com/file/d/1aVixHrtmPYqcj5t81KJATaiBlj9ZR9wB/view?usp=sharing)
+
 ---
 ## Componentes Utilizados
 - **Servomotor (Pino 22):** Controlado via PWM para realizar movimentos suaves entre ângulos específicos.
